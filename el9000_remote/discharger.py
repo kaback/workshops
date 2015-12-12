@@ -1,5 +1,6 @@
 from EL9000 import *
-from time import sleep
+from time import sleep,time
+import sys
 
 el9000 = EL9000('/dev/ttyS0')
 assert el9000.getStatus() == 0
@@ -12,7 +13,9 @@ while(True):
     
     status = el9000.getStatus() #ladeschluss?
     (Ah, mAh, i, u) = el9000.getMeasData()
-    array = [Ah, mAh, i, u, status]
+    timestamp = int(time())
+    array = [timestamp, Ah, mAh, i, u, status]
 
     print ','.join(map(str,array)) 
+    sys.stdout.flush()
     assert status != 8
